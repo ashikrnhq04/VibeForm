@@ -1,6 +1,5 @@
 import StepProvider from "@/provider/StepProvider";
 import Step from "../../components/form/steps/Step";
-import { Form } from "react-hook-form";
 
 export default function MultiStepFrom() {
   return (
@@ -11,7 +10,7 @@ export default function MultiStepFrom() {
         <Step>Step 2 </Step>
         <Step>Form step 3</Step>
 
-        <Step validate={() => false}>Form step 4</Step>
+        <Step validate={() => true}>Form step 4</Step>
         <Step>Form step 5</Step>
         <Step>Form step 6</Step>
       </StepProvider>

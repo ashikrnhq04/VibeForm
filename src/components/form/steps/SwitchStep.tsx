@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 export default function SwitchStep({
   handlePrev,
   handleNext,
@@ -6,17 +8,19 @@ export default function SwitchStep({
   handleNext: () => void;
 }) {
   return (
-    <div className='controller flex gap-2 justify-between'>
-      <button
-        className='prev cursor-pointer p-2 border rounded-md'
+    <div className='flex gap-2 justify-between items-center'>
+      <Button
+        variant='outline'
+        className='cursor-pointer '
         onClick={handlePrev}>
         Prev
-      </button>
-      <button
-        className='next cursor-pointer p-2 border rounded-md'
+      </Button>
+      <Button
+        variant='outline'
+        className='cursor-pointer '
         onClick={handleNext}>
         Next
-      </button>
+      </Button>
     </div>
   );
 }

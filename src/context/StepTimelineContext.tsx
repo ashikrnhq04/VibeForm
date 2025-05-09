@@ -20,7 +20,7 @@ export const useStepTimelineContext = (): StepTimelineContextType => {
   const context = useContext(StepTimelineContext);
 
   if (!context) {
-    throw new Error("This form can't be used out of context");
+    throw new Error("This step timeline can't be used out of context");
   }
 
   return context;
