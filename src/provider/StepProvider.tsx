@@ -2,15 +2,26 @@ import { StepTimelineContext } from "@/context/StepTimelineContext";
 
 import { ReactNode, useState } from "react";
 import StepTimeline from "@/components/form/steps/StepTimeline";
-import { getSteps } from "@/components/form/steps/stepindicator.hooks";
+import { childrenToArray } from "@/components/form/steps/stepindicator.hooks";
+
+import { type StepError } from "@/context/StepTimelineContext";
 
 export default function StepProvider({ children }: { children: ReactNode }) {
   const [currentStep, setCurrentStep] = useState<number>(1);
 
-  const totalSteps = getSteps(children).length;
+  const [stepErrors, setStepErrors] = useState<Record<number, StepError>>({});
+
+  const totalSteps = childrenToArray(children).length;
 
   return (
-    <StepTimelineContext value={{ currentStep, setCurrentStep, totalSteps }}>
+    <StepTimelineContext
+      value={{
+        currentStep,
+        setCurrentStep,
+        totalSteps,
+        stepErrors,
+        setStepErrors,
+      }}>
       <StepTimeline>{children}</StepTimeline>
     </StepTimelineContext>
   );

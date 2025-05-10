@@ -1,16 +1,26 @@
-import { useStepTimelineContext } from "@/context/StepTimelineContext";
-import StepperProvider from "@/provider/StepProvider";
+import {
+  type StepError,
+  useStepTimelineContext,
+} from "@/context/StepTimelineContext";
 import { ReactNode } from "react";
 
-export default function Step({
-  children,
-  validate,
-}: {
+export type StepProps = {
   children: ReactNode;
-  validate?: () => boolean;
-}) {
-  const { currentStep, setCurrentStep, setStepErrors } =
+  validate?: () => StepError | Promise<StepError>;
+};
+
+export default function Step({ children, validate }: StepProps) {
+  const { currentStep, setCurrentStep, setStepErrors, stepErrors } =
     useStepTimelineContext();
 
-  return <div className={`form-page-${currentStep}`}>{children}</div>;
+  const error = stepErrors?.[currentStep];
+
+  return (
+    <div className={`form-page-${currentStep}`}>
+      {error?.hasError && (
+        <p className='text-center text-red-500'>{error.message}</p>
+      )}
+      {children}
+    </div>
+  );
 }

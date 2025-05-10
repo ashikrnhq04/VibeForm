@@ -9,8 +9,8 @@ export type StepTimelineContextType = {
   currentStep: number;
   setCurrentStep: Dispatch<SetStateAction<number>>;
   totalSteps: number;
-  stepErrors?: Record<number, StepError>;
-  setStepErrors?: (errors: Record<number, StepError>) => void;
+  stepErrors: Record<number, StepError>;
+  setStepErrors: (errors: Record<number, StepError>) => void;
 };
 
 export const StepTimelineContext =

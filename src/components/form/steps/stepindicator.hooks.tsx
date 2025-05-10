@@ -1,38 +1,44 @@
-import { useStepTimelineContext } from "@/context/StepTimelineContext";
+import {
+  type StepError,
+  useStepTimelineContext,
+} from "@/context/StepTimelineContext";
 
-import React, {
-  Children,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-} from "react";
+import { StepProps } from "./Step";
+
+import { Children, isValidElement, ReactElement, ReactNode } from "react";
+
 import Step from "./Step";
 
 export default function useStepIndicator(children: ReactNode[]) {
-  type StepProps = {
-    validate?: () => boolean;
-  };
-
   const { currentStep, setCurrentStep, totalSteps, stepErrors, setStepErrors } =
     useStepTimelineContext();
 
-  const curretnStepElement = getSteps(children)[
-    currentStep - 1
-  ] as ReactElement<StepProps>;
+  const steps = childrenToArray(children);
 
-  function handleNext(): void {
-    setCurrentStep((current: number) => {
-      if (current < totalSteps) {
-        if (curretnStepElement.props.validate) {
-          if (curretnStepElement.props.validate()) {
-            return current + 1;
-          }
-        } else {
-          return current + 1;
-        }
-      }
-      return current;
-    });
+  type onCompleteType = () => void | Promise<void>;
+
+  async function handleNext(onComplete?: onCompleteType): Promise<void> {
+    //check step validity
+    const error = await validateStep(steps, currentStep);
+
+    //update state with error
+    if (error.hasError) {
+      setStepErrors({ [currentStep]: error });
+      return;
+    }
+
+    //clear error state
+    setStepErrors({ [currentStep]: { hasError: false } });
+
+    //return of onComplete function if any
+    if (currentStep === totalSteps && onComplete) {
+      return await onComplete();
+    }
+
+    //update step state
+    setCurrentStep((currentStep) =>
+      currentStep < totalSteps ? currentStep + 1 : currentStep
+    );
   }
 
   function handlePrev(): void {
@@ -41,17 +47,27 @@ export default function useStepIndicator(children: ReactNode[]) {
 
   return {
     currentStep,
-    setCurrentStep,
     totalSteps,
     handleNext,
     handlePrev,
     stepErrors,
-    setStepErrors,
+    steps,
   };
 }
 
-export function getSteps(children: ReactNode): ReactNode[] {
+export function childrenToArray(children: ReactNode): ReactNode[] {
   return Children.toArray(children).filter(
     (child) => isValidElement(child) && child.type == Step
   );
 }
+
+const validateStep = async (
+  steps: ReactNode[],
+  step: number
+): Promise<StepError> => {
+  const currentChild = steps[step - 1] as ReactElement<StepProps>;
+  if (currentChild.props.validate) {
+    return await currentChild.props.validate();
+  }
+  return { hasError: false };
+};
