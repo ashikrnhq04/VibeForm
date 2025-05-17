@@ -7,8 +7,6 @@ import { StepProps } from "./Step";
 
 import { Children, isValidElement, ReactElement, ReactNode } from "react";
 
-import Step from "./Step";
-
 export default function useStepIndicator(children: ReactNode[]) {
   const { currentStep, setCurrentStep, totalSteps, stepErrors, setStepErrors } =
     useStepTimelineContext();
@@ -56,9 +54,7 @@ export default function useStepIndicator(children: ReactNode[]) {
 }
 
 export function childrenToArray(children: ReactNode): ReactNode[] {
-  return Children.toArray(children).filter(
-    (child) => isValidElement(child) && child.type == Step
-  );
+  return Children.toArray(children).filter((child) => isValidElement(child));
 }
 
 const validateStep = async (

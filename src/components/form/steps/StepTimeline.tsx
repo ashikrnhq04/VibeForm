@@ -1,24 +1,31 @@
-import React, { ReactNode } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import useStepIndicator, { childrenToArray } from "./stepindicator.hooks";
 import StepSwitcher from "./StepSwitcher";
 import { PaginationContent } from "@/components/ui/pagination";
 import Indicator from "./parts/Indicator";
 import Progressbar from "./parts/Progressbar";
+import Step from "./Step";
 
-export default function StepIndicator({ children }: { children: ReactNode }) {
-  const { currentStep, handleNext, handlePrev, stepErrors } = useStepIndicator(
-    childrenToArray(children)
+export default function StepTimeline({
+  children,
+  submit,
+}: {
+  children: ReactNode;
+  submit: () => void;
+}) {
+  const { currentStep, handleNext, handlePrev, stepErrors, totalSteps } =
+    useStepIndicator(childrenToArray(children));
+
+  const childrens = childrenToArray(children).filter(
+    (child) => (child as ReactElement).type == Step
   );
-
-  const childrens = childrenToArray(children);
 
   const curretnStepElement = childrens[currentStep - 1];
 
   const error = stepErrors;
 
-  console.log(currentStep);
   return (
-    <>
+    <div className='form-wrapper space-y-6'>
       <PaginationContent className='flex items-center space-x-2 w-full'>
         {childrens.length > 1 &&
           childrens.map((_, index) => {
@@ -38,16 +45,17 @@ export default function StepIndicator({ children }: { children: ReactNode }) {
           })}
       </PaginationContent>
 
-      <div className='timeline'>{curretnStepElement}</div>
+      {curretnStepElement}
 
       {childrens.length > 1 && (
         <StepSwitcher
           currentStep={currentStep}
-          nextBtnTxt={currentStep === childrens.length ? "Submit" : "Next"}
+          nextBtnTxt={"Next"}
           handlePrev={handlePrev}
-          handleNext={() => handleNext(() => alert("I'm complete"))}
+          handleNext={() => handleNext(submit)}
+          totalSteps={totalSteps}
         />
       )}
-    </>
+    </div>
   );
 }

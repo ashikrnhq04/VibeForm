@@ -8,26 +8,33 @@ export default function StepSwitcher({
   prevBtnTxt = "Prev",
   nextBtnTxt = "Next",
   currentStep,
+  totalSteps,
 }: {
   handlePrev: () => void;
   handleNext: () => void;
   prevBtnTxt?: ReactNode;
   nextBtnTxt: ReactNode;
   currentStep: number;
+  totalSteps: number;
 }) {
+  console.log(totalSteps, currentStep);
+
   return (
     <div className='flex gap-2 justify-between items-center'>
       <Button
         disabled={currentStep === 1}
         variant='outline'
         className='cursor-pointer'
-        onClick={handlePrev}>
+        onClick={handlePrev}
+      >
         {prevBtnTxt}
       </Button>
       <Button
         variant='outline'
         className='cursor-pointer '
-        onClick={handleNext}>
+        type='button'
+        onClick={handleNext}
+      >
         {nextBtnTxt}
       </Button>
     </div>

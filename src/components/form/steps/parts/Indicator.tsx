@@ -1,10 +1,7 @@
 import { PaginationItem } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { TiTick } from "react-icons/ti";
-import {
-  useStepTimelineContext,
-  type StepError,
-} from "@/context/StepTimelineContext";
+import { useStepTimelineContext } from "@/context/StepTimelineContext";
 
 export default function Indicator({
   index,
@@ -39,7 +36,8 @@ export default function Indicator({
           variant={isCompleted ? "default" : "outline"}
           className={` ${isCompleted ? "cursor-pointer" : ""} ${
             bgColor + " " + errorColor
-          }`}>
+          }`}
+        >
           {isCompleted ? <TiTick /> : index + 1}
         </Button>
       </PaginationItem>

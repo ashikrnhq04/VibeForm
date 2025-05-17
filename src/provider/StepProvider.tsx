@@ -6,7 +6,13 @@ import { childrenToArray } from "@/components/form/steps/stepindicator.hooks";
 
 import { type StepError } from "@/context/StepTimelineContext";
 
-export default function StepProvider({ children }: { children: ReactNode }) {
+export default function StepProvider({
+  children,
+  submit,
+}: {
+  children: ReactNode;
+  submit: () => void;
+}) {
   const [currentStep, setCurrentStep] = useState<number>(1);
 
   const [stepErrors, setStepErrors] = useState<Record<number, StepError>>({});
@@ -21,8 +27,9 @@ export default function StepProvider({ children }: { children: ReactNode }) {
         totalSteps,
         stepErrors,
         setStepErrors,
-      }}>
-      <StepTimeline>{children}</StepTimeline>
+      }}
+    >
+      <StepTimeline submit={submit}>{children}</StepTimeline>
     </StepTimelineContext>
   );
 }
