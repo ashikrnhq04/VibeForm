@@ -16,7 +16,6 @@ export default function StepSwitcher({
   currentStep: number;
   totalSteps: number;
 }) {
-  console.log(currentStep, totalSteps);
   return (
     <div className='flex gap-2 justify-between items-center'>
       <Button

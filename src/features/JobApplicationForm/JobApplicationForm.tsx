@@ -56,7 +56,9 @@ export default function JobApplicationForm() {
 
   const triggerForm = useTriggerForm<formType>();
 
-  const submitBtnRef = useRef();
+  const submitBtnRef = useRef<HTMLButtonElement>(
+    null
+  ) as React.RefObject<HTMLButtonElement>;
 
   function validateStep(data: string[] | string) {
     return triggerForm(formRef.current?.form, data as []);
@@ -68,7 +70,7 @@ export default function JobApplicationForm() {
       schema={formSchema}
       initialValuse={formInitialValues}
       onSubmit={(values) => {
-        console.log(values);
+        alert(JSON.stringify(values));
       }}
     >
       <StepArea submitBtnRef={submitBtnRef}>

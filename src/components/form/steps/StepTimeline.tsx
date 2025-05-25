@@ -24,8 +24,6 @@ export default function StepTimeline({ children }: { children: ReactNode }) {
 
   const error = stepErrors;
 
-  console.log(submitBtnRef);
-
   return (
     <div className='form-wrapper space-y-6'>
       <PaginationContent className='flex items-center space-x-2 w-full'>

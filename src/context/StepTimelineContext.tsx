@@ -2,6 +2,7 @@ import {
   createContext,
   Dispatch,
   Ref,
+  RefObject,
   SetStateAction,
   useContext,
 } from "react";
@@ -17,7 +18,7 @@ export type StepTimelineContextType = {
   totalSteps: number;
   stepErrors: Record<number, StepError>;
   setStepErrors: (errors: Record<number, StepError>) => void;
-  submitBtnRef: Ref<HTMLButtonElement>;
+  submitBtnRef: RefObject<HTMLButtonElement>;
 };
 
 export const StepTimelineContext =

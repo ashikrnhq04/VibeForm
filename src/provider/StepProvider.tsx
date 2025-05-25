@@ -1,6 +1,6 @@
 import { StepTimelineContext } from "@/context/StepTimelineContext";
 
-import { ReactNode, Ref, useState } from "react";
+import { ReactNode, Ref, RefObject, useState } from "react";
 import StepTimeline from "@/components/form/steps/StepTimeline";
 import { childrenToArray } from "@/components/form/steps/stepindicator.hooks";
 
@@ -11,7 +11,7 @@ export default function StepArea({
   submitBtnRef,
 }: {
   children: ReactNode;
-  submitBtnRef: HTMLButtonElement;
+  submitBtnRef: RefObject<HTMLButtonElement>;
 }) {
   const [currentStep, setCurrentStep] = useState<number>(1);
 
