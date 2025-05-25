@@ -83,7 +83,7 @@ export function TextField<T extends FieldValues>({
                   type={type}
                   placeholder={placeholder}
                   {...field}
-                  className={`${icon ? "pr-8" : ""}`}
+                  className={`${icon ? "pr-8" : ""} `}
                   autoComplete={autoComplete}
                 />
                 {icon && (

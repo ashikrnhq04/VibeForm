@@ -16,6 +16,7 @@ export default function StepSwitcher({
   currentStep: number;
   totalSteps: number;
 }) {
+  console.log(currentStep, totalSteps);
   return (
     <div className='flex gap-2 justify-between items-center'>
       <Button
@@ -28,10 +29,9 @@ export default function StepSwitcher({
         {prevBtnTxt}
       </Button>
       <Button
-        disabled={currentStep > totalSteps}
         variant='outline'
         className='cursor-pointer '
-        type='button'
+        type={currentStep > totalSteps ? "submit" : "button"}
         onClick={handleNext}
       >
         {nextBtnTxt}

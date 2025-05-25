@@ -8,8 +8,14 @@ import { StepProps } from "./Step";
 import { Children, isValidElement, ReactElement, ReactNode } from "react";
 
 export default function useStepIndicator(children: ReactNode[]) {
-  const { currentStep, setCurrentStep, totalSteps, stepErrors, setStepErrors } =
-    useStepTimelineContext();
+  const {
+    currentStep,
+    setCurrentStep,
+    totalSteps,
+    stepErrors,
+    setStepErrors,
+    submitBtnRef,
+  } = useStepTimelineContext();
 
   const steps = childrenToArray(children);
 
@@ -51,6 +57,7 @@ export default function useStepIndicator(children: ReactNode[]) {
     stepErrors,
     setStepErrors,
     steps,
+    submitBtnRef,
   };
 }
 

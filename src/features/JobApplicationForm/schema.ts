@@ -98,94 +98,116 @@ export const addressSchema = z.object({
 
 export const educationSchema = z
   .array(
-    z.object({
-      examination: z
-        .string({ required_error: "Examination is required" })
-        .nonempty({ message: "Examination can't be empty" }),
-      group: z
-        .string({ required_error: "Group is required" })
-        .nonempty({ message: "Group can't be empty" }),
-      passing_year: z
-        .string({ required_error: "Examination year is required" })
-        .nonempty({ message: "Year can't be empty" }),
-      result: z
-        .string({ required_error: "Grade is required" })
-        .nonempty({ message: "Grade can't be empty" }),
-      gpa_scale: z.preprocess(
-        (val) => (val ? Number(val) : undefined),
-        z
-          .number({
-            required_error: "GPA scale is required",
-            message: "Select GPA scale",
-          })
-          .positive({ message: "Must be a positive number" })
-          .optional()
-      ),
-      gpa_point: z.preprocess(
-        (val) => (val ? Number(val) : undefined),
-        z
-          .number({
-            required_error: "GPA is required",
-            message: "Specify GPA",
-          })
-          .positive({ message: "Must be a positive number" })
-          .optional()
-      ),
-    })
+    z
+      .object({
+        examination: z
+          .string({ required_error: "Examination is required" })
+          .nonempty({ message: "Examination can't be empty" }),
+        group: z
+          .string({ required_error: "Group is required" })
+          .nonempty({ message: "Group can't be empty" }),
+        passing_year: z
+          .string({ required_error: "Examination year is required" })
+          .nonempty({ message: "Year can't be empty" }),
+        result: z
+          .string({ required_error: "Grade is required" })
+          .nonempty({ message: "Grade can't be empty" }),
+        gpa_scale: z.preprocess(
+          (val) => (val ? Number(val) : undefined),
+          z
+            .number({
+              required_error: "GPA scale is required",
+              message: "Select GPA scale",
+            })
+            .positive({ message: "Must be a positive number" })
+            .optional()
+        ),
+        gpa_point: z.preprocess(
+          (val) => (val ? Number(val) : undefined),
+          z
+            .number({
+              required_error: "GPA is required",
+              message: "Specify GPA",
+            })
+            .positive({ message: "Must be a positive number" })
+            .optional()
+        ),
+      })
+      .transform((data) => {
+        if (data.result !== "gpa") {
+          return data;
+        }
 
-    // .transform((data) => {
-    //   if (data.result !== "gpa") {
-    //     return data;
-    //   }
-
-    //   return {
-    //     ...data,
-    //     gpa_point: data.gpa_point,
-    //     gpa_scale: data.gpa_scale,
-    //   };
-    // })
-    // .refine(
-    //   (data) => {
-    //     if (data.result === "gpa" && !data.gpa_point) {
-    //       return false;
-    //     }
-    //     return true;
-    //   },
-    //   {
-    //     message: "GPA point is required ",
-    //     path: ["gpa_point"],
-    //   }
-    // )
-    // .refine(
-    //   (data) => {
-    //     if (data.result === "gpa" && !data.gpa_scale) {
-    //       return false;
-    //     }
-    //     return true;
-    //   },
-    //   {
-    //     message: "Select GPA scale",
-    //     path: ["gpa_scale"],
-    //   }
-    // )
-    // .refine(
-    //   (data) => {
-    //     if (
-    //       data.result === "gpa" &&
-    //       Number(data.gpa_point) > Number(data.gpa_scale)
-    //     ) {
-    //       return false;
-    //     }
-    //     return true;
-    //   },
-    //   {
-    //     message: "GPA point cannot exceed the GPA scale",
-    //     path: ["gpa_point"],
-    //   }
-    // )
+        return {
+          ...data,
+          gpa_point: data.gpa_point,
+          gpa_scale: data.gpa_scale,
+        };
+      })
+      .refine(
+        (data) => {
+          if (data.result === "gpa" && !data.gpa_point) {
+            return false;
+          }
+          return true;
+        },
+        {
+          message: "GPA point is required ",
+          path: ["gpa_point"],
+        }
+      )
+      .refine(
+        (data) => {
+          if (data.result === "gpa" && !data.gpa_scale) {
+            return false;
+          }
+          return true;
+        },
+        {
+          message: "Select GPA scale",
+          path: ["gpa_scale"],
+        }
+      )
+      .refine(
+        (data) => {
+          if (
+            data.result === "gpa" &&
+            Number(data.gpa_point) > Number(data.gpa_scale)
+          ) {
+            return false;
+          }
+          return true;
+        },
+        {
+          message: "GPA point cannot exceed the GPA scale",
+          path: ["gpa_point"],
+        }
+      )
   )
-  .min(1, { message: "Education information is required" })
-  .default([]);
+  .min(1, { message: "Education information is required" });
+
+export const firstStepFields = [
+  "personalInfo.firstName",
+  "personalInfo.lastName",
+  "personalInfo.fatherName",
+  "personalInfo.motherName",
+  "personalInfo.email",
+  "personalInfo.dob",
+  "personalInfo.phone",
+  "personalInfo.NID",
+  "personalInfo.gender",
+  "personalInfo.customGender",
+  "present_address.address",
+  "present_address.city",
+  "present_address.division",
+  "present_address.country",
+  "permanent_address.address",
+  "permanent_address.city",
+  "permanent_address.division",
+  "permanent_address.country",
+];
+
+export const secondStepFields = ["education"] as const;
 
 export type PersonalInfoType = z.infer<typeof personalInfoSchema>;
 export type EducationType = z.infer<typeof educationSchema>;

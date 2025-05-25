@@ -93,7 +93,7 @@ export function DateField<T extends FieldValues>(props: Props<T>): JSX.Element {
   } = props;
   const control = useFormContext();
 
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date>(new Date());
 
   const [open, setOpen] = useState(false);
 
@@ -151,7 +151,7 @@ export function DateField<T extends FieldValues>(props: Props<T>): JSX.Element {
                     {field.value ? (
                       format(field.value, "PPP")
                     ) : (
-                      <span>Pick a date</span>
+                      <span>{placeholder}</span>
                     )}
 
                     <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />

@@ -1,13 +1,18 @@
-import { Button } from "@/components/ui/button";
 import Step from "@/components/form/steps/Step";
 import VibeForm, { VibeFormRefType } from "@/components/form/VibeForm";
 import { z } from "zod";
-import { StepError } from "@/context/StepTimelineContext";
 import { useRef } from "react";
-import { addressSchema, educationSchema, personalInfoSchema } from "./schema";
+import {
+  addressSchema,
+  educationSchema,
+  firstStepFields,
+  personalInfoSchema,
+  secondStepFields,
+} from "./schema";
 import StepArea from "@/provider/StepProvider";
 import PersonalDetails from "./PersonalDetails";
 import EducationDetails from "./EducationDetails";
+import { useTriggerForm } from "@/components/form/hooks/useTriggerForm";
 
 const formSchema = z.object({
   personalInfo: personalInfoSchema,
@@ -45,35 +50,17 @@ const formInitialValues = {
 };
 
 export default function JobApplicationForm() {
-  const submitBtnRef = useRef<HTMLButtonElement>(null);
-
   type formType = z.infer<typeof formSchema>;
+
   const formRef = useRef<VibeFormRefType<formType>>(null);
 
-  function clickSubmit() {
-    submitBtnRef.current?.click();
+  const triggerForm = useTriggerForm<formType>();
+
+  const submitBtnRef = useRef();
+
+  function validateStep(data: string[] | string) {
+    return triggerForm(formRef.current?.form, data as []);
   }
-
-  function validateStep(): StepError | undefined {
-    const errors = formRef.current?.getErrors as
-      | Record<string, { message: string }>
-      | undefined;
-
-    if (errors) {
-      for (const key in errors) {
-        if (key.length > 0) {
-          return {
-            hasError: true,
-            message:
-              key.length == 1 ? errors[key].message : "Fields are required",
-          };
-        }
-      }
-    }
-    return undefined;
-  }
-
-  console.log(formRef.current?.getErrors);
 
   return (
     <VibeForm
@@ -84,17 +71,19 @@ export default function JobApplicationForm() {
         console.log(values);
       }}
     >
-      <StepArea>
-        <Step validate={validateStep}>
+      <StepArea submitBtnRef={submitBtnRef}>
+        <Step validate={() => validateStep(firstStepFields)}>
           <PersonalDetails />
         </Step>
-        <Step validate={validateStep}>
+        <Step validate={() => validateStep(secondStepFields)}>
           <EducationDetails />
         </Step>
-        <Step validate={validateStep}>Step Three </Step>
-        <Step validate={validateStep}>Step Four </Step>
+        <Step>Step Three </Step>
+        <Step>Step Four </Step>
       </StepArea>
-      <Button ref={submitBtnRef}>Submit</Button>
+      <button type='submit' ref={submitBtnRef} hidden>
+        Submit
+      </button>
     </VibeForm>
   );
 }

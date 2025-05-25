@@ -119,13 +119,14 @@ export default function PersonalDetails() {
       </div>
       <div className='flex gap-4 justify-between items-start'>
         <div className='w-full space-y-3'>
-          <p className='text-left '>Present Address</p>
+          <p className='text-left '>
+            Present Address <span className='text-red-500'>*</span>
+          </p>
 
           <TextAreaField<PersonalInfoType>
             name='present_address.address'
             placeholder='Road, Area, Word, Zip Code'
             autoComplete='street-address'
-            required
           />
           <SelectField<PersonalInfoType>
             options={districts}
@@ -145,18 +146,20 @@ export default function PersonalDetails() {
             type='text'
             label='Country'
             name='present_address.country'
+            placeholder='Country Name'
             required
           />
         </div>
         <div className='w-0.5 h-70 bg-slate-200 self-center'></div>
         <div className='w-full space-y-3'>
-          <p className='text-left '>Permanent Address</p>
+          <p className='text-left '>
+            Permanent Address <span className='text-red-500'>*</span>
+          </p>
 
           <TextAreaField<PersonalInfoType>
             name='permanent_address.address'
             placeholder='Road, Area, Word, Zip Code'
             autoComplete='street-address'
-            required
           />
 
           <SelectField<PersonalInfoType>
@@ -178,6 +181,7 @@ export default function PersonalDetails() {
             type='text'
             label='Country'
             name='permanent_address.country'
+            placeholder='Country Name'
             required
             autoComplete='country-name'
           />

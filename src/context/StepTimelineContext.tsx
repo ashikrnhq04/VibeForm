@@ -1,4 +1,10 @@
-import { createContext, Dispatch, SetStateAction, useContext } from "react";
+import {
+  createContext,
+  Dispatch,
+  Ref,
+  SetStateAction,
+  useContext,
+} from "react";
 
 export type StepError = {
   hasError: boolean;
@@ -11,6 +17,7 @@ export type StepTimelineContextType = {
   totalSteps: number;
   stepErrors: Record<number, StepError>;
   setStepErrors: (errors: Record<number, StepError>) => void;
+  submitBtnRef: Ref<HTMLButtonElement>;
 };
 
 export const StepTimelineContext =

@@ -20,10 +20,9 @@ export default function Step({ children }: StepProps) {
         <p className='text-center text-red-500'>{error.message}</p>
       )}
       {children}
+      {error?.hasError && (
+        <p className='text-center text-red-500'>{error.message}</p>
+      )}
     </div>
   );
-}
-
-function StepContent({ children }: { children: ReactNode }) {
-  return children;
 }
