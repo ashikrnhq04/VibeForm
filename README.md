@@ -1,4 +1,4 @@
-# VibeForm
+# VibeForm made by Human (no AI)\*
 
 VibeForm is a modern, multi-step job application form built with React, TypeScript, Vite, and ShadCN UI components. It demonstrates advanced form management, validation, and user experience patterns for complex forms.
 
@@ -118,4 +118,4 @@ bun install
 
 ---
 
-For more details, see the source code and comments in each file.
+###### \* Except some TS related help
