@@ -6,11 +6,11 @@ import { ReactNode } from "react";
 
 export type StepProps = {
   children: ReactNode;
-  validate?: () => StepError | Promise<StepError>;
+  validate?: () => StepError | Promise<StepError> | undefined;
 };
 
-export default function Step({ children, validate }: StepProps) {
-  const { currentStep, stepErrors } = useStepTimelineContext();
+export default function Step({ children }: StepProps) {
+  const { currentStep, stepErrors, setStepErrors } = useStepTimelineContext();
 
   const error = stepErrors?.[currentStep];
 
@@ -22,4 +22,8 @@ export default function Step({ children, validate }: StepProps) {
       {children}
     </div>
   );
+}
+
+function StepContent({ children }: { children: ReactNode }) {
+  return children;
 }

@@ -20,7 +20,7 @@ export default function useStepIndicator(children: ReactNode[]) {
     const error = await validateStep(steps, currentStep);
 
     //update state with error
-    if (error.hasError) {
+    if (error?.hasError) {
       setStepErrors({ [currentStep]: error });
       return;
     }
@@ -49,6 +49,7 @@ export default function useStepIndicator(children: ReactNode[]) {
     handleNext,
     handlePrev,
     stepErrors,
+    setStepErrors,
     steps,
   };
 }
@@ -63,7 +64,7 @@ const validateStep = async (
 ): Promise<StepError> => {
   const currentChild = steps[step - 1] as ReactElement<StepProps>;
   if (currentChild.props.validate) {
-    return await currentChild.props.validate();
+    return (await currentChild.props.validate()) ?? { hasError: false };
   }
   return { hasError: false };
 };

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { useStepTimelineContext } from "@/context/StepTimelineContext";
 import { ReactNode } from "react";
 
 export default function StepSwitcher({
@@ -20,6 +19,7 @@ export default function StepSwitcher({
   return (
     <div className='flex gap-2 justify-between items-center'>
       <Button
+        type='button'
         disabled={currentStep === 1}
         variant='outline'
         className='cursor-pointer'
@@ -28,6 +28,7 @@ export default function StepSwitcher({
         {prevBtnTxt}
       </Button>
       <Button
+        disabled={currentStep > totalSteps}
         variant='outline'
         className='cursor-pointer '
         type='button'

@@ -6,13 +6,7 @@ import Indicator from "./parts/Indicator";
 import Progressbar from "./parts/Progressbar";
 import Step from "./Step";
 
-export default function StepTimeline({
-  children,
-  submit,
-}: {
-  children: ReactNode;
-  submit: () => void;
-}) {
+export default function StepTimeline({ children }: { children: ReactNode }) {
   const { currentStep, handleNext, handlePrev, stepErrors, totalSteps } =
     useStepIndicator(childrenToArray(children));
 
@@ -36,6 +30,7 @@ export default function StepTimeline({
                   index={index}
                   currentStep={currentStep}
                   hasError={error[currentStep]?.hasError}
+                  isCompleted={index + 1 < currentStep}
                 />
                 {childrens.length - 1 !== index && (
                   <Progressbar currentStep={currentStep} index={index} />
@@ -52,7 +47,11 @@ export default function StepTimeline({
           currentStep={currentStep}
           nextBtnTxt={"Next"}
           handlePrev={handlePrev}
-          handleNext={() => handleNext(submit)}
+          handleNext={() =>
+            handleNext(() => {
+              console.log("working");
+            })
+          }
           totalSteps={totalSteps}
         />
       )}

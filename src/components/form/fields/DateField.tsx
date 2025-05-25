@@ -19,9 +19,9 @@ import {
 
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { ReactNode, useState } from "react";
-import { SelectField } from "./SelectField";
+import SelectField from "./SelectField";
 
-type propsType<T extends FieldValues> = {
+type Props<T extends FieldValues> = {
   label?: string;
   name: Path<T>;
   placeholder?: string;
@@ -48,7 +48,40 @@ const arrayMonths = [
   { value: "December", text: "December" },
 ];
 
-export function DateField<T extends FieldValues>(props: propsType<T>) {
+/**
+ * DateField component for selecting a date
+ * @param {Object} props - Props for the DateField component
+ * @param props.label - Label for the date field
+ * @param props.name - Name of the field in the form
+ * @param props.placeholder - Placeholder text for the date field
+ * @param props.startYear - Starting year for the date selection (default: current year - 18)
+ * @param props.endYear - Ending year for the date selection (default: current year - 32)
+ * @param props.required - Whether the date field is required
+ * @param props.icon - Optional icon to display in the date field
+ * @param props.className - Additional CSS classes for the date field
+ * @param props.description - Description text for the date field
+ *
+ * @example
+ * <DateField
+ *   label="Date of Birth"
+ *   name="dob"
+ *   startYear={2005}
+ *   endYear={1990}
+ *   required={true}
+ *   description="Please select your date of birth"
+ * />
+ * @description
+ * A customizable date input field component for forms, allowing users to select a date using a calendar interface.
+ * The component integrates with React Hook Form for form state management and validation.
+ * It provides options for selecting the month and year, and displays the selected date in a user-friendly format.
+ * The component is designed to be reusable and can be easily integrated into different forms within a React application.
+ * It supports various customization options such as labels, placeholders, and descriptions, making it flexible for different use cases.
+ * It also includes built-in validation for required fields and allows for easy styling through additional CSS classes.
+ * @returns {JSX.Element} - The rendered DateField component
+ *
+ *
+ */
+export function DateField<T extends FieldValues>(props: Props<T>): JSX.Element {
   const {
     label,
     name,
@@ -60,7 +93,7 @@ export function DateField<T extends FieldValues>(props: propsType<T>) {
   } = props;
   const control = useFormContext();
 
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>();
 
   const [open, setOpen] = useState(false);
 
@@ -71,7 +104,7 @@ export function DateField<T extends FieldValues>(props: propsType<T>) {
 
   function handleMonthChange(month: string) {
     const clMonth = setMonth(
-      date,
+      date ?? new Date(),
       arrayMonths.indexOf(
         arrayMonths.find((item) => item.value == month) ?? arrayMonths[0]
       )
@@ -80,7 +113,7 @@ export function DateField<T extends FieldValues>(props: propsType<T>) {
   }
 
   function handleYearChange(year: string) {
-    const clYear = setYear(date, parseInt(year));
+    const clYear = setYear(date ?? new Date(), parseInt(year));
     setDate(clYear);
   }
 
@@ -115,9 +148,11 @@ export function DateField<T extends FieldValues>(props: propsType<T>) {
                       !field.value && "text-muted-foreground"
                     )}
                   >
-                    {!field.value
-                      ? placeholder
-                      : field.value && format(field.value, "PP")}
+                    {field.value ? (
+                      format(field.value, "PPP")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
 
                     <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
                   </Button>
@@ -145,7 +180,7 @@ export function DateField<T extends FieldValues>(props: propsType<T>) {
                   disabled={(date) =>
                     date > new Date() || date < new Date("1900-01-01")
                   }
-                  month={date}
+                  month={date ?? new Date()}
                   onMonthChange={setDate}
                 />
               </PopoverContent>

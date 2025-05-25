@@ -8,14 +8,14 @@ export default function Indicator({
   currentStep,
   hasError,
   length,
+  isCompleted,
 }: {
   index: number;
   currentStep: number;
   hasError: boolean;
   length: number;
+  isCompleted: boolean;
 }) {
-  const isCompleted = index + 1 < currentStep;
-
   const { setCurrentStep } = useStepTimelineContext();
 
   //indicator color
@@ -29,6 +29,7 @@ export default function Indicator({
     length !== index && (
       <PaginationItem>
         <Button
+          type='button'
           onClick={() =>
             setCurrentStep((current) => (isCompleted ? index + 1 : current))
           }

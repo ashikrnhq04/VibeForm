@@ -12,7 +12,6 @@ import {
 } from "react-hook-form";
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import StepProvider from "@/provider/StepProvider";
 
 export type VibeFormRefType<T extends FieldValues> = {
   getValues: () => T;
@@ -21,6 +20,7 @@ export type VibeFormRefType<T extends FieldValues> = {
   formState: FormState<T>;
   control: Control<T>;
   form: UseFormReturn<T>;
+  getErrors: FormState<T>["errors"];
 };
 
 export type fromPropsType<TSchema extends ZodType> = {
@@ -54,7 +54,9 @@ export default function VibeForm<TSchema extends ZodType>(
     ref,
   } = props;
 
-  const form = useForm<z.infer<TSchema>>({
+  type formType = z.infer<typeof schema>;
+
+  const form = useForm<formType>({
     resolver: zodResolver(schema),
     defaultValues: initialValuse as DefaultValues<TSchema>,
     mode,
@@ -74,6 +76,7 @@ export default function VibeForm<TSchema extends ZodType>(
       formState: form.formState,
       control: form.control,
       form: form,
+      getErrors: form.formState.errors,
     };
   });
 
