@@ -1,5 +1,7 @@
 # VibeForm made by Human (no AI)\*
 
+Among all types of projects, the multi-step form has always been an exciting and challenging one for me. From day 1 of my journey in the programming career, it's always fascinating for me to build custom form/multi-step form, capture user input, apply different types of validation, and sanitization. This project is basically an output of that excitement, and will be used in my project. I'll keep working on this for more optimization, and releasing this as a complete plugin/package will be in my plan.
+
 VibeForm is a modern, multi-step job application form built with React, TypeScript, Vite, and ShadCN UI components. It demonstrates advanced form management, validation, and user experience patterns for complex forms.
 
 ## Features
