@@ -1,55 +1,121 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
 # VibeForm
+
+VibeForm is a modern, multi-step job application form built with React, TypeScript, Vite, and ShadCN UI components. It demonstrates advanced form management, validation, and user experience patterns for complex forms.
+
+## Features
+
+- **Multi-step form**: Organize large forms into logical steps for better UX.
+- **React Hook Form**: Efficient form state management and validation.
+- **Zod validation**: Schema-based, type-safe validation for all fields, including nested and array fields.
+- **Dynamic fields**: Add or remove education entries with limits and minimum requirements.
+- **Custom UI**: Built with ShadCN UI and Lucide icons for a clean, modern look.
+- **TypeScript**: Full type safety across all components and schemas.
+- **Reusable components**: Modular fields (TextField, SelectField, DateField, etc.) for easy extension.
+- **Step validation**: Each step validates only its relevant fields.
+- **Error display**: Inline error messages using ShadCN's FormMessage.
+
+## Project Structure
+
+```
+src/
+  components/
+    form/
+      FieldsArray.ts         // Dynamic array field logic
+      VibeForm.tsx           // Main form wrapper
+      fields/                // Reusable field components
+      steps/                 // Stepper logic and UI
+    ui/                      // ShadCN UI primitives
+  context/                   // Step timeline context
+  features/
+    JobApplicationForm/      // Example form, schema, and step contents
+      JobApplicationForm.tsx  // Main job application form component
+      schema.ts               // Zod schema for validation
+      steps/                  // Step components (e.g., PersonalDetails, EducationDetails)
+  lib/
+    utils.ts                 // Utility functions (e.g., age calculation)
+  provider/
+    StepProvider.tsx         // Step context provider
+```
+
+## Main Components
+
+- **VibeForm**: Top-level form wrapper, handles schema, initial values, and submission.
+- **StepTimeline**: Renders the stepper UI and manages navigation.
+- **FieldsArray**: Handles dynamic arrays (e.g., education history) with min/max limits.
+- **TextField, SelectField, DateField, RadioField, TextAreaField**: Reusable, type-safe form fields.
+- **EducationDetails, PersonalDetails**: Step components for different sections of the form.
+
+## Validation
+
+- Uses [zod](https://zod.dev/) for schema validation.
+- Supports nested objects and arrays (e.g., education history).
+- Custom validation logic for age, GPA, and required fields.
+- Step-specific validation using exported field lists (e.g., `firstStepFields`, `secondStepFields`).
+
+## Usage
+
+1. **Install dependencies**:
+   ```bash
+   npm install
+   # or
+   bun install
+   ```
+2. **Start the development server**:
+   ```bash
+   npm run dev
+   # or
+   bun run dev
+   ```
+3. **Open** [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Example
+
+```tsx
+import React from "react";
+import { VibeForm } from "./components/form/VibeForm";
+import { JobApplicationForm } from "./features/JobApplicationForm";
+const App: React.FC = () => {
+  return (
+    <VibeForm
+      schema={JobApplicationForm.schema}
+      initialValues={JobApplicationForm.initialValues}
+      onSubmit={JobApplicationForm.onSubmit}
+    >
+      <JobApplicationForm />
+    </VibeForm>
+  );
+};
+export default App;
+```
+
+## Getting Started
+
+To get started with VibeForm, clone the repository and install the dependencies:
+
+```bash
+git clone https://github.com/ashikrnhq04/vibeform.git
+cd vibeform
+npm install
+# or
+bun install
+```
+
+## Customization
+
+- **Add new steps**: Create a new step component and add it to `JobApplicationForm.tsx` inside the `<StepArea>`.
+- **Add new fields**: Create a new field component in `fields/` and use it in your step component.
+- **Validation**: Update `schema.ts` to add or change validation rules.
+
+## Credits
+
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React Hook Form](https://react-hook-form.com/)
+- [zod](https://zod.dev/)
+- [ShadCN UI](https://ui.shadcn.com/)
+- [Lucide Icons](https://lucide.dev/)
+
+---
+
+For more details, see the source code and comments in each file.

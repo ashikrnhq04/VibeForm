@@ -60,7 +60,7 @@ export default function JobApplicationForm() {
     null
   ) as React.RefObject<HTMLButtonElement>;
 
-  function validateStep(data: string[] | string) {
+  function validateStep<T extends readonly string[] | string>(data: T) {
     return triggerForm(formRef.current?.form, data as []);
   }
 

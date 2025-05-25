@@ -16,12 +16,11 @@ export default function Step({ children }: StepProps) {
 
   return (
     <div className={`form-page-${currentStep} space-y-4`}>
-      {error?.hasError && (
-        <p className='text-center text-red-500'>{error.message}</p>
-      )}
       {children}
       {error?.hasError && (
-        <p className='text-center text-red-500'>{error.message}</p>
+        <p className='text-center text-red-500 p-4 bg-red-100/50'>
+          {error.message}
+        </p>
       )}
     </div>
   );
