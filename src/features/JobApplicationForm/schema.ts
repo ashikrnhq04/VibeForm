@@ -1,4 +1,5 @@
 import { calculateAge } from "@/lib/utils";
+import { compareDesc } from "date-fns";
 import { z } from "zod";
 
 export const personalInfoSchema = z
@@ -184,7 +185,84 @@ export const educationSchema = z
         }
       )
   )
-  .min(1, { message: "Education information is required" });
+  .min(1, { message: "At least 1 educational information is required" })
+  .default([]);
+
+export const experienceSchema = z
+  .array(
+    z
+      .object({
+        company: z
+          .string({ required_error: "Comapny name is required" })
+          .nonempty({ message: "Company name can't be empty" }),
+        jobTitle: z
+          .string({ required_error: "Job title is required" })
+          .nonempty({
+            message: "Job title can't be empty",
+          }),
+        startingDate: z.date({ required_error: "Starting date is required" }),
+        endDate: z.date({ required_error: "End date is required" }).optional(),
+        currentlyWorking: z.boolean().optional(),
+        jobDescription: z
+          .string()
+          .refine(
+            (value) => {
+              if (value.trim().split(" ").length > 300) {
+                return false;
+              }
+              return true;
+            },
+            { message: "Job description can't be more than 500 words" }
+          )
+          .optional(),
+      })
+      .refine(
+        (date) => {
+          if (date.currentlyWorking) return true;
+          return compareDesc(date.startingDate, date.endDate ?? new Date()) ==
+            0 ||
+            compareDesc(date.startingDate, date.endDate ?? new Date()) == -1
+            ? false
+            : true;
+        },
+        {
+          message:
+            "Star and End date can't be same or End date is before the Start date",
+          path: ["endDate"],
+        }
+      )
+  )
+  .optional()
+  .default([]);
+
+export const formInitialValues = {
+  personalInfo: {
+    firstName: "",
+    lastName: "",
+    fatherName: "",
+    motherName: "",
+    email: "",
+    dob: new Date(),
+    phone: "",
+    NID: "",
+    gender: "",
+    customGender: "",
+  },
+  present_address: {
+    address: "",
+    city: "",
+    division: "",
+    country: "",
+  },
+  permanent_address: {
+    address: "",
+    city: "",
+    division: "",
+    country: "",
+  },
+  education: [],
+  experience: [],
+};
 
 export const firstStepFields = [
   "personalInfo.firstName",
@@ -208,7 +286,9 @@ export const firstStepFields = [
 ];
 
 export const secondStepFields = ["education"] as const;
+export const thirdStepFields = ["experience"] as const;
 
 export type PersonalInfoType = z.infer<typeof personalInfoSchema>;
 export type EducationType = z.infer<typeof educationSchema>;
+export type ExperienceType = z.infer<typeof experienceSchema>;
 export type AddressType = z.infer<typeof addressSchema>;
