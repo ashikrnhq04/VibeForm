@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import React, { JSX, ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 
 type Props<T extends FieldValues> = {

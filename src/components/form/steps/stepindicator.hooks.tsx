@@ -3,7 +3,7 @@ import {
   useStepTimelineContext,
 } from "@/context/StepTimelineContext";
 
-import { StepProps } from "./Step";
+import { Props } from "./Step";
 
 import { Children, isValidElement, ReactElement, ReactNode } from "react";
 
@@ -69,7 +69,7 @@ const validateStep = async (
   steps: ReactNode[],
   step: number
 ): Promise<StepError> => {
-  const currentChild = steps[step - 1] as ReactElement<StepProps>;
+  const currentChild = steps[step - 1] as ReactElement<Props>;
   if (currentChild.props.validate) {
     return (await currentChild.props.validate()) ?? { hasError: false };
   }

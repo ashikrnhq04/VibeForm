@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 
-import { Link } from "lucide-react";
 import { ReactElement } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 
@@ -32,7 +31,7 @@ export default function CheckboxField<T extends FieldValues>(props: Props<T>) {
         control={control.control}
         name={name}
         render={({ field }) => (
-          <FormItem className={cn("flex flex-row items-start", className)}>
+          <FormItem className={cn("flex flex-col items-start", className)}>
             <FormLabel className='cursor-pointer'>
               <FormControl>
                 <Checkbox
@@ -44,7 +43,6 @@ export default function CheckboxField<T extends FieldValues>(props: Props<T>) {
               {label}
             </FormLabel>
             <FormMessage />
-
             {description && <FormDescription>{description}</FormDescription>}
           </FormItem>
         )}

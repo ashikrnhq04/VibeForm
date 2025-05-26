@@ -11,6 +11,7 @@ import {
 interface ExtendedFieldArray<T extends FieldValues>
   extends UseFieldArrayReturn<T, ArrayPath<T>> {
   isLimitReached: boolean;
+  limit?: number;
 }
 
 type Props<T extends FieldValues> = {

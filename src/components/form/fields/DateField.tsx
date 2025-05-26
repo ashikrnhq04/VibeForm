@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover";
 
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { ReactNode, useState } from "react";
+import { JSX, ReactNode, useState } from "react";
 import SelectField from "./SelectField";
 
 type Props<T extends FieldValues> = {

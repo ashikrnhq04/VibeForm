@@ -232,6 +232,14 @@ export const experienceSchema = z
   .optional()
   .default([]);
 
+export const consentSchema = z
+  .boolean({
+    required_error: "Consent checkbox must be checked!",
+  })
+  .refine((val) => val === true, {
+    message: "Consent checkbox must be checked!",
+  });
+
 export const formInitialValues = {
   personalInfo: {
     firstName: "",
@@ -257,6 +265,7 @@ export const formInitialValues = {
   },
   education: [],
   experience: [],
+  consent: false,
 };
 
 export const firstStepFields = [

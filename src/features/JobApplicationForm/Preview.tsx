@@ -3,6 +3,25 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { format } from "date-fns";
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import CheckboxField from "@/components/form/fields/CheckboxField";
+
+type Education = {
+  examination: string;
+  group: string;
+  passing_year: string;
+  result: string;
+  gpa_point?: string;
+  gpa_scale?: number;
+};
+
+type Experience = {
+  company: string;
+  jobTitle: string;
+  startingDate: string;
+  endDate?: string;
+  currentlyWorking: boolean;
+  jobDescription?: string;
+};
 
 export default function SubmissionPreview() {
   const {
@@ -169,7 +188,7 @@ export default function SubmissionPreview() {
                   </TableCell>
                 </TableRow>
               ) : (
-                education.map((edu, idx) => (
+                education.map((edu: Education, idx: number) => (
                   <React.Fragment key={idx}>
                     <TableRow>
                       <TableCell className={leftCell}>Examination</TableCell>
@@ -218,7 +237,7 @@ export default function SubmissionPreview() {
                   </TableCell>
                 </TableRow>
               ) : (
-                experience.map((exp, idx) => (
+                experience.map((exp: Experience, idx: number) => (
                   <React.Fragment key={idx}>
                     <TableRow>
                       <TableCell className={leftCell}>Company</TableCell>
@@ -267,6 +286,10 @@ export default function SubmissionPreview() {
               )}
             </TableBody>
           </Table>
+          <CheckboxField
+            name='consent'
+            label='All the information is correct. I agree to submit the form.'
+          />
         </CardContent>
       </Card>
     </div>

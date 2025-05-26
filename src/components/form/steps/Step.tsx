@@ -31,7 +31,7 @@ export type Props = {
  */
 
 export default function Step({ children }: Props) {
-  const { currentStep, stepErrors, setStepErrors } = useStepTimelineContext();
+  const { currentStep, stepErrors } = useStepTimelineContext();
 
   const error = stepErrors?.[currentStep];
 

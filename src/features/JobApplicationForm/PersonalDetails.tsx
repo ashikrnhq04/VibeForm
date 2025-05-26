@@ -16,9 +16,9 @@ import {
 import { addressSchema, personalInfoSchema } from "./schema";
 import { z } from "zod";
 import { useFormContext } from "react-hook-form";
-import { fetchCities, fetchCountries, getCountries } from "./data";
+import { getCountries } from "./data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCities } from "@/hooks/useCities";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

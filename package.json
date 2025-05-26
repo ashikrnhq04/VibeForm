@@ -50,5 +50,9 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.1"
+  },
+  "resolutions": {
+    "date-fns": "4.1.0",
+    "react-day-picker": "9.0.0"
   }
 }

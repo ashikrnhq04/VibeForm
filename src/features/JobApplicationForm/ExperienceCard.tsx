@@ -1,20 +1,12 @@
 import { ExperienceType } from "./schema";
 import { TextField } from "@/components/form/fields/TextField";
-import SelectField from "@/components/form/fields/SelectField";
 import { useFormContext } from "react-hook-form";
 import { JSX } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
-import { z } from "zod";
 import { DateField } from "@/components/form/fields/DateField";
 import TextAreaField from "@/components/form/fields/TextAreaField";
 import CheckboxField from "@/components/form/fields/CheckboxField";
-
-const ageCap = 32;
-const arrayYears = Array.from({ length: ageCap }, (_, i) => ({
-  text: `${new Date().getFullYear() - 1 - i}`,
-  value: `${new Date().getFullYear() - 1 - i}`,
-}));
 
 type Props = {
   index: number;

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useRef } from "react";
 import {
   addressSchema,
+  consentSchema,
   educationSchema,
   experienceSchema,
   firstStepFields,
@@ -25,6 +26,7 @@ const formSchema = z.object({
   permanent_address: addressSchema,
   education: educationSchema,
   experience: experienceSchema,
+  consent: consentSchema,
 });
 
 export default function JobApplicationForm() {
@@ -49,6 +51,7 @@ export default function JobApplicationForm() {
       initialValuse={formInitialValues}
       onSubmit={(values) => {
         alert(JSON.stringify(values));
+        setTimeout(() => window.location.reload(), 1000);
       }}
       mode='onBlur'
     >

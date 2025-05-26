@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 export function useCities(country: string | null) {
   const [cities, setCities] = useState<{ text: string; value: string }[]>([]);
-  const cache = useRef<Record<string, string[]>>({});
+  const cache = useRef<Record<string, { text: string; value: string }[]>>({});
 
   let unMounted = false;
 

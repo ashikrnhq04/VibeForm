@@ -5,7 +5,6 @@ import { useFormContext } from "react-hook-form";
 import { JSX } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
-import { z } from "zod";
 
 const ageCap = 32;
 const arrayYears = Array.from({ length: ageCap }, (_, i) => ({
