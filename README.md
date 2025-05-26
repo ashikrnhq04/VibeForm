@@ -122,7 +122,6 @@ bun install
 
 ---
 
-screenshots:
-![screenshot1](vibeform.png)
+![screenshot1](/public/vibeform.png)
 
 ###### \* Except some type related help
