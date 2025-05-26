@@ -16,8 +16,10 @@ import {
 import { addressSchema, personalInfoSchema } from "./schema";
 import { z } from "zod";
 import { useFormContext } from "react-hook-form";
-import { districts, divisions } from "./data";
+import { fetchCities, fetchCountries, getCountries } from "./data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useCallback, useEffect, useState } from "react";
+import { useCities } from "@/hooks/useCities";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const personalInfo = z.object({
@@ -29,9 +31,35 @@ const personalInfo = z.object({
 type PersonalInfoType = z.infer<typeof personalInfo>;
 
 export default function PersonalDetails() {
-  const { watch } = useFormContext<PersonalInfoType>();
+  const { watch, setValue } = useFormContext<PersonalInfoType>();
 
+  const [countries, setCountries] = useState<{ text: string; value: string }[]>(
+    []
+  );
+
+  const [persentCountry, setPresentCountry] = useState<string | null>(null);
+
+  const [permanentCountry, setPermanentCountry] = useState<string | null>(null);
+
+  // Keep tracking of gender if its custom
   const gender = watch("personalInfo.gender");
+
+  const presentCities: { text: string; value: string }[] =
+    useCities(persentCountry) ?? [];
+
+  const permanentCities: { text: string; value: string }[] =
+    useCities(permanentCountry) ?? [];
+
+  useEffect(() => {
+    getCountries(setCountries);
+  }, []);
+
+  console.log(
+    "Present length",
+    permanentCities.length,
+    "Permanent length",
+    permanentCities.length
+  );
 
   return (
     <Card>
@@ -124,42 +152,56 @@ export default function PersonalDetails() {
         </div>
         <div className='flex gap-4 justify-between items-start'>
           <div className='w-full space-y-3'>
-            <p className='text-left '>
+            <p className='text-left font-bold'>
               Present Address <span className='text-red-500'>*</span>
             </p>
+            <SelectField<PersonalInfoType>
+              options={countries}
+              label='Country'
+              name='present_address.country'
+              placeholder='Select Country'
+              onChange={(value) => {
+                setPresentCountry(value);
+                setValue("present_address.city", ""); // Reset city when country changes
+              }}
+              required
+            />
             <TextAreaField<PersonalInfoType>
               name='present_address.address'
               placeholder='Road, Area, Word, Zip Code'
               autoComplete='street-address'
             />
             <SelectField<PersonalInfoType>
-              options={districts}
+              options={presentCities}
               label='City'
               name='present_address.city'
-              placeholder='Select City'
-              required
-            />
-            <SelectField<PersonalInfoType>
-              options={divisions}
-              label='Division'
-              name='present_address.division'
-              placeholder='Select Division'
-              required
-            />
-            <TextField<PersonalInfoType>
-              type='text'
-              label='Country'
-              name='present_address.country'
-              placeholder='Country Name'
+              placeholder={
+                persentCountry === null
+                  ? "Select a country first"
+                  : !presentCities.length
+                  ? "Loading cities..."
+                  : "Select City"
+              }
               required
             />
           </div>
           <div className='w-0.5 h-70 bg-slate-200 self-center'></div>
           <div className='w-full space-y-3'>
-            <p className='text-left '>
+            <p className='text-left font-bold'>
               Permanent Address <span className='text-red-500'>*</span>
             </p>
 
+            <SelectField<PersonalInfoType>
+              options={countries}
+              label='Country'
+              name='permanent_address.country'
+              placeholder='Select Country'
+              onChange={(value) => {
+                setPermanentCountry(value);
+                setValue("permanent_address.city", "");
+              }}
+              required
+            />
             <TextAreaField<PersonalInfoType>
               name='permanent_address.address'
               placeholder='Road, Area, Word, Zip Code'
@@ -169,25 +211,15 @@ export default function PersonalDetails() {
             <SelectField<PersonalInfoType>
               label='City'
               name='permanent_address.city'
-              options={districts}
-              placeholder='Select City'
+              options={permanentCities}
+              placeholder={
+                permanentCountry === null
+                  ? "Select a country first"
+                  : !permanentCities.length
+                  ? "Loading cities..."
+                  : "Select City"
+              }
               required
-            />
-            <SelectField<PersonalInfoType>
-              label='Division'
-              name='permanent_address.division'
-              options={divisions}
-              placeholder='Select Division'
-              required
-            />
-
-            <TextField<PersonalInfoType>
-              type='text'
-              label='Country'
-              name='permanent_address.country'
-              placeholder='Country Name'
-              required
-              autoComplete='country-name'
             />
           </div>
         </div>

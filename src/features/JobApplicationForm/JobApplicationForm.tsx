@@ -53,16 +53,13 @@ export default function JobApplicationForm() {
       mode='onBlur'
     >
       <StepArea submitBtnRef={submitBtnRef}>
-        <Step>
-          {/* validate={() => validateStep(firstStepFields)} */}
+        <Step validate={() => validateStep(firstStepFields)}>
           <PersonalDetails />
         </Step>
-        <Step>
-          {/* validate={() => validateStep(secondStepFields)} */}
+        <Step validate={() => validateStep(secondStepFields)}>
           <EducationDetails />
         </Step>
-        <Step>
-          {/* validate={() => validateStep(thirdStepFields)} */}
+        <Step validate={() => validateStep(thirdStepFields)}>
           <ExperienceDetails />
         </Step>
         <Step>

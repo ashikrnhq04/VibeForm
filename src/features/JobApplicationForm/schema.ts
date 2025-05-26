@@ -89,9 +89,6 @@ export const addressSchema = z.object({
   city: z
     .string({ required_error: "City is required" })
     .nonempty({ message: "City can't be empty" }),
-  division: z
-    .string({ required_error: "Division is required" })
-    .nonempty({ message: "Division can't be empty" }),
   country: z
     .string({ required_error: "Country is required" })
     .nonempty({ message: "Country can't be empty" }),
@@ -251,13 +248,11 @@ export const formInitialValues = {
   present_address: {
     address: "",
     city: "",
-    division: "",
     country: "",
   },
   permanent_address: {
     address: "",
     city: "",
-    division: "",
     country: "",
   },
   education: [],

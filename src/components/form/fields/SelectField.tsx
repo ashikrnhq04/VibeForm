@@ -28,6 +28,7 @@ type Props<T extends FieldValues> = {
   className?: string;
   onChange?: (value: string) => void;
   icon?: ReactNode;
+  disabled?: boolean;
 };
 
 /**
@@ -84,6 +85,7 @@ export default function SelectField<T extends FieldValues>({
   required = false,
   className,
   icon,
+  disabled,
 }: Props<T>): JSX.Element {
   const { control } = useFormContext<T>();
 
@@ -100,11 +102,15 @@ export default function SelectField<T extends FieldValues>({
             </FormLabel>
           )}
           <Select
-            onValueChange={onChange || field.onChange}
+            onValueChange={(value) => {
+              field.onChange(value);
+              onChange?.(value);
+            }}
             value={field.value}
           >
             <FormControl>
               <SelectTrigger
+                disabled={disabled}
                 className={`w-full relative flex items-center ${
                   icon ? "pr-8" : ""
                 }`}
@@ -120,7 +126,7 @@ export default function SelectField<T extends FieldValues>({
 
             <SelectContent>
               <ScrollArea className='max-h-[200px]'>
-                {options.map((option) => (
+                {options?.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.text}
                   </SelectItem>

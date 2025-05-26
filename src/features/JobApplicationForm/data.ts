@@ -1,76 +1,66 @@
-export const districts = [
-  { text: "Bagerhat", value: "Bagerhat" },
-  { text: "Bandarban", value: "Bandarban" },
-  { text: "Barguna", value: "Barguna" },
-  { text: "Barishal", value: "Barishal" },
-  { text: "Bhola", value: "Bhola" },
-  { text: "Bogura", value: "Bogura" },
-  { text: "Brahmanbaria", value: "Brahmanbaria" },
-  { text: "Chandpur", value: "Chandpur" },
-  { text: "Chattogram", value: "Chattogram" },
-  { text: "Chuadanga", value: "Chuadanga" },
-  { text: "Cox's Bazar", value: "Cox's Bazar" },
-  { text: "Cumilla", value: "Cumilla" },
-  { text: "Dhaka", value: "Dhaka" },
-  { text: "Dinajpur", value: "Dinajpur" },
-  { text: "Faridpur", value: "Faridpur" },
-  { text: "Feni", value: "Feni" },
-  { text: "Gaibandha", value: "Gaibandha" },
-  { text: "Gazipur", value: "Gazipur" },
-  { text: "Gopalganj", value: "Gopalganj" },
-  { text: "Habiganj", value: "Habiganj" },
-  { text: "Jamalpur", value: "Jamalpur" },
-  { text: "Jashore", value: "Jashore" },
-  { text: "Jhalokathi", value: "Jhalokathi" },
-  { text: "Jhenaidah", value: "Jhenaidah" },
-  { text: "Joypurhat", value: "Joypurhat" },
-  { text: "Khagrachhari", value: "Khagrachhari" },
-  { text: "Khulna", value: "Khulna" },
-  { text: "Kishoreganj", value: "Kishoreganj" },
-  { text: "Kurigram", value: "Kurigram" },
-  { text: "Kushtia", value: "Kushtia" },
-  { text: "Lakshmipur", value: "Lakshmipur" },
-  { text: "Lalmonirhat", value: "Lalmonirhat" },
-  { text: "Madaripur", value: "Madaripur" },
-  { text: "Magura", value: "Magura" },
-  { text: "Manikganj", value: "Manikganj" },
-  { text: "Meherpur", value: "Meherpur" },
-  { text: "Moulvibazar", value: "Moulvibazar" },
-  { text: "Munshiganj", value: "Munshiganj" },
-  { text: "Mymensingh", value: "Mymensingh" },
-  { text: "Naogaon", value: "Naogaon" },
-  { text: "Narail", value: "Narail" },
-  { text: "Narayanganj", value: "Narayanganj" },
-  { text: "Narsingdi", value: "Narsingdi" },
-  { text: "Natore", value: "Natore" },
-  { text: "Netrokona", value: "Netrokona" },
-  { text: "Nilphamari", value: "Nilphamari" },
-  { text: "Noakhali", value: "Noakhali" },
-  { text: "Pabna", value: "Pabna" },
-  { text: "Panchagarh", value: "Panchagarh" },
-  { text: "Patuakhali", value: "Patuakhali" },
-  { text: "Pirojpur", value: "Pirojpur" },
-  { text: "Rajbari", value: "Rajbari" },
-  { text: "Rajshahi", value: "Rajshahi" },
-  { text: "Rangamati", value: "Rangamati" },
-  { text: "Rangpur", value: "Rangpur" },
-  { text: "Satkhira", value: "Satkhira" },
-  { text: "Shariatpur", value: "Shariatpur" },
-  { text: "Sherpur", value: "Sherpur" },
-  { text: "Sirajganj", value: "Sirajganj" },
-  { text: "Sunamganj", value: "Sunamganj" },
-  { text: "Sylhet", value: "Sylhet" },
-  { text: "Tangail", value: "Tangail" },
-  { text: "Thakurgaon", value: "Thakurgaon" },
-];
+export async function fetchCountries() {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_COUNTRY_API_BASE_URL}/countries/positions`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
 
-export const divisions = [
-  { text: "Barishal", value: "Barishal" },
-  { text: "Chattogram", value: "chattogram" },
-  { text: "Dhaka", value: "Dhaka" },
-  { text: "Khulna", value: "Khulna" },
-  { text: "Mymensingh", value: "Mymensingh" },
-  { text: "Rajshahi", value: "Rajshahi" },
-  { text: "Rangpur", value: "Rangpur" },
-  { text: "Sylhet", value: "Sylhet" },
-];
+    if (!response.ok) {
+      throw new Error(`HTTP Error ${response.status}`);
+    }
+
+    const { data } = await response.json();
+    return (
+      data?.map((item: { name: string }) => ({
+        text: item.name,
+        value: item.name,
+      })) || []
+    );
+  } catch (error) {
+    throw new Error(`Error fetching data: ${error}`);
+  }
+}
+
+export async function fetchCities(country: string) {
+  try {
+    const response = await fetch(
+      "https://countriesnow.space/api/v0.1/countries/cities",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ country }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error ${response.status}`);
+    }
+
+    const { data } = await response.json();
+    return data.map((city: { name: string; value: string }) => ({
+      text: city,
+      value: city,
+    }));
+  } catch (error) {
+    throw new Error(`Error fetching data: ${error}`);
+  }
+}
+
+export async function getCountries(
+  setCountries: React.Dispatch<
+    React.SetStateAction<{ text: string; value: string }[]>
+  >
+) {
+  try {
+    const data = await fetchCountries();
+    setCountries(data);
+  } catch (error) {
+    console.error("Error fetching countries:", error);
+    return;
+  }
+}
