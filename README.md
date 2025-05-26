@@ -29,7 +29,7 @@ src/
     ui/                      // ShadCN UI primitives
   context/                   // Step timeline context
   features/
-    JobApplicationForm/      // Example form, schema, and step contents
+    JobApplicationForm/      // Example form, schema, and step contents. This form is only for example purpose. The step mechanism and custom fields are the main features of this project.
       JobApplicationForm.tsx  // Main job application form component
       schema.ts               // Zod schema for validation
       steps/                  // Step components (e.g., PersonalDetails, EducationDetails)
@@ -120,4 +120,4 @@ bun install
 
 ---
 
-###### \* Except some TS related help
+###### \* Except some type related help
