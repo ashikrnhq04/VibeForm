@@ -48,9 +48,8 @@ export type fromPropsType<TSchema extends ZodType> = {
  * onSubmit={mySubmitHandler}
  * mode="onChange"
  * ref={formRef}
- * submitBtnRef={submitBtnRef}
  * >
- * <StepArea>
+ * <StepArea submitBtnRef={submitBtnRef}>
  *   <Step>
  * <TextField name="firstName" label="First Name" />
  *   </Step>

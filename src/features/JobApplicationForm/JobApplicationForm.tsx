@@ -50,7 +50,7 @@ export default function JobApplicationForm() {
       onSubmit={(values) => {
         alert(JSON.stringify(values));
       }}
-      mode='onChange'
+      mode='onBlur'
     >
       <StepArea submitBtnRef={submitBtnRef}>
         <Step>
