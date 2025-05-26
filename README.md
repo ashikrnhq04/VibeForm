@@ -117,7 +117,12 @@ bun install
 - [zod](https://zod.dev/)
 - [ShadCN UI](https://ui.shadcn.com/)
 - [Lucide Icons](https://lucide.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Country API](https://countriesnow.space)
 
 ---
+
+screenshots:
+![screenshot1](vibeform.png)
 
 ###### \* Except some type related help
