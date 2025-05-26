@@ -27,10 +27,11 @@ type Props<T extends FieldValues> = {
   placeholder?: string;
   startYear?: number;
   endYear?: number;
-  required: boolean;
+  required?: boolean;
   icon?: ReactNode;
   className?: string;
   description?: string;
+  disabled?: boolean;
 };
 
 const arrayMonths = [
@@ -90,6 +91,7 @@ export function DateField<T extends FieldValues>(props: Props<T>): JSX.Element {
     endYear = getYear(new Date()) - 32,
     required,
     description,
+    disabled,
   } = props;
   const control = useFormContext();
 
@@ -136,12 +138,14 @@ export function DateField<T extends FieldValues>(props: Props<T>): JSX.Element {
         return (
           <FormItem className='flex flex-col w-full'>
             <FormLabel className={`capitalize ${!label ? "min-h-[13px]" : ""}`}>
-              {label} {required && <span className='ml-0.5'>*</span>}
+              {label}{" "}
+              {required && <span className='ml-0.5 text-red-500'>*</span>}
             </FormLabel>{" "}
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
+                    disabled={disabled}
                     variant={"outline"}
                     className={cn(
                       "w-full pl-3 text-left font-normal",

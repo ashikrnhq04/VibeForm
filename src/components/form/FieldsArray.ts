@@ -39,7 +39,7 @@ export default function FieldsArray<T extends FieldValues>({
   };
   const isLimitReached = Boolean(limit && fieldArray.fields.length >= limit);
 
-  return children({ ...fieldArray, remove, isLimitReached });
+  return children({ ...fieldArray, remove, isLimitReached, limit });
 }
 
 FieldsArray.displayName = "FieldsArray";

@@ -5,49 +5,27 @@ import { useRef } from "react";
 import {
   addressSchema,
   educationSchema,
+  experienceSchema,
   firstStepFields,
+  formInitialValues,
   personalInfoSchema,
   secondStepFields,
+  thirdStepFields,
 } from "./schema";
 import StepArea from "@/provider/StepProvider";
 import PersonalDetails from "./PersonalDetails";
 import EducationDetails from "./EducationDetails";
 import { useTriggerForm } from "@/components/form/hooks/useTriggerForm";
+import ExperienceDetails from "./ExperienceDetails";
+import SubmissionPreview from "./Preview";
 
 const formSchema = z.object({
   personalInfo: personalInfoSchema,
   present_address: addressSchema,
   permanent_address: addressSchema,
   education: educationSchema,
+  experience: experienceSchema,
 });
-
-const formInitialValues = {
-  personalInfo: {
-    firstName: "",
-    lastName: "",
-    fatherName: "",
-    motherName: "",
-    email: "",
-    dob: new Date(),
-    phone: "",
-    NID: "",
-    gender: "",
-    customGender: "",
-  },
-  present_address: {
-    address: "",
-    city: "",
-    division: "",
-    country: "",
-  },
-  permanent_address: {
-    address: "",
-    city: "",
-    division: "",
-    country: "",
-  },
-  education: [],
-};
 
 export default function JobApplicationForm() {
   type formType = z.infer<typeof formSchema>;
@@ -72,16 +50,24 @@ export default function JobApplicationForm() {
       onSubmit={(values) => {
         alert(JSON.stringify(values));
       }}
+      mode='onChange'
     >
       <StepArea submitBtnRef={submitBtnRef}>
-        <Step validate={() => validateStep(firstStepFields)}>
+        <Step>
+          {/* validate={() => validateStep(firstStepFields)} */}
           <PersonalDetails />
         </Step>
-        <Step validate={() => validateStep(secondStepFields)}>
+        <Step>
+          {/* validate={() => validateStep(secondStepFields)} */}
           <EducationDetails />
         </Step>
-        <Step>Step Three </Step>
-        <Step>Step Four </Step>
+        <Step>
+          {/* validate={() => validateStep(thirdStepFields)} */}
+          <ExperienceDetails />
+        </Step>
+        <Step>
+          <SubmissionPreview />
+        </Step>
       </StepArea>
       <button type='submit' ref={submitBtnRef} hidden>
         Submit

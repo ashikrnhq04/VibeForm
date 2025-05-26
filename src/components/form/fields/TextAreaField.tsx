@@ -70,7 +70,7 @@ export default function TextAreaField<T extends FieldValues>(
       control={control.control}
       name={name}
       render={({ field }) => (
-        <FormItem className={cn("w-full", className)}>
+        <FormItem className={cn("w-full")}>
           <FormLabel className={`capitalize`}>
             {label}
             {required && <span className='ml-0.5 text-red-500'>*</span>}
