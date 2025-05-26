@@ -1,3 +1,4 @@
+import "react-day-picker/style.css";
 import "./App.css";
 import JobApplicationForm from "./features/JobApplicationForm/JobApplicationForm";
 

@@ -27,7 +27,7 @@
     "lucide-react": "^0.511.0",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
-    "react-day-picker": "8.10.1",
+    "react-day-picker": "^9.7.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.3",
     "react-icons": "^5.5.0",
@@ -50,9 +50,5 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
     "vite": "^6.3.1"
-  },
-  "resolutions": {
-    "date-fns": "4.1.0",
-    "react-day-picker": "9.0.0"
   }
 }
