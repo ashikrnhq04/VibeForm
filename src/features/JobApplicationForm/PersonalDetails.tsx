@@ -31,13 +31,17 @@ const personalInfo = z.object({
 type PersonalInfoType = z.infer<typeof personalInfo>;
 
 export default function PersonalDetails() {
-  const { watch, setValue } = useFormContext<PersonalInfoType>();
+  const {
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext<PersonalInfoType>();
 
   const [countries, setCountries] = useState<{ text: string; value: string }[]>(
     []
   );
 
-  const [persentCountry, setPresentCountry] = useState<string | null>(null);
+  const [presentCountry, setPresentCountry] = useState<string | null>(null);
 
   const [permanentCountry, setPermanentCountry] = useState<string | null>(null);
 
@@ -45,7 +49,7 @@ export default function PersonalDetails() {
   const gender = watch("personalInfo.gender");
 
   const presentCities: { text: string; value: string }[] =
-    useCities(persentCountry) ?? [];
+    useCities(presentCountry) ?? [];
 
   const permanentCities: { text: string; value: string }[] =
     useCities(permanentCountry) ?? [];
@@ -74,12 +78,14 @@ export default function PersonalDetails() {
             name='personalInfo.firstName'
             required
             icon={<UserRound size={18} />}
+            hasError={!!errors.personalInfo?.firstName}
           />
           <TextField<PersonalInfoType>
             placeholder='Last Name'
             name='personalInfo.lastName'
             icon={<UsersRound size={18} />}
             required
+            hasError={!!errors.personalInfo?.lastName}
           />
         </div>
 
@@ -89,6 +95,7 @@ export default function PersonalDetails() {
           name='personalInfo.fatherName'
           required
           icon={<UserCog size={18} />}
+          hasError={!!errors.personalInfo?.fatherName}
         />
         <TextField<PersonalInfoType>
           label="Mother's Name"
@@ -96,6 +103,7 @@ export default function PersonalDetails() {
           name='personalInfo.motherName'
           required
           icon={<UserRoundPlus size={18} />}
+          hasError={!!errors.personalInfo?.motherName}
         />
 
         <TextField<PersonalInfoType>
@@ -104,6 +112,7 @@ export default function PersonalDetails() {
           name='personalInfo.phone'
           required
           icon={<Signal size={18} />}
+          hasError={!!errors.personalInfo?.phone}
         />
         <TextField<PersonalInfoType>
           label='Email'
@@ -112,6 +121,7 @@ export default function PersonalDetails() {
           name='personalInfo.email'
           required
           icon={<Mail size={18} />}
+          hasError={!!errors.personalInfo?.email}
         />
         <div className='flex gap-4 items-start'>
           <DateField<PersonalInfoType>
@@ -127,6 +137,7 @@ export default function PersonalDetails() {
             name='personalInfo.NID'
             icon={<SquareUserRound size={18} />}
             required
+            hasError={!!errors.personalInfo?.NID}
           />
         </div>
         <div className='flex gap-4 flex-col'>
@@ -146,6 +157,7 @@ export default function PersonalDetails() {
                 name='personalInfo.customGender'
                 placeholder='Specify gender'
                 required
+                hasError={!!errors.personalInfo?.customGender}
               />
             </div>
           )}
@@ -170,13 +182,15 @@ export default function PersonalDetails() {
               name='present_address.address'
               placeholder='Road, Area, Word, Zip Code'
               autoComplete='street-address'
+              label='Address'
+              required
             />
             <SelectField<PersonalInfoType>
               options={presentCities}
               label='City'
               name='present_address.city'
               placeholder={
-                persentCountry === null
+                presentCountry === null
                   ? "Select a country first"
                   : !presentCities.length
                   ? "Loading cities..."
@@ -206,6 +220,8 @@ export default function PersonalDetails() {
               name='permanent_address.address'
               placeholder='Road, Area, Word, Zip Code'
               autoComplete='street-address'
+              label='Address'
+              required
             />
 
             <SelectField<PersonalInfoType>

@@ -128,12 +128,6 @@ export default function SubmissionPreview() {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className={leftCell}>Division</TableCell>
-                <TableCell className={rightCell}>
-                  {present_address.division}
-                </TableCell>
-              </TableRow>
-              <TableRow>
                 <TableCell className={leftCell}>Country</TableCell>
                 <TableCell className={rightCell}>
                   {present_address.country}
@@ -160,12 +154,7 @@ export default function SubmissionPreview() {
                   {permanent_address.city}
                 </TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell className={leftCell}>Division</TableCell>
-                <TableCell className={rightCell}>
-                  {permanent_address.division}
-                </TableCell>
-              </TableRow>
+
               <TableRow>
                 <TableCell className={leftCell}>Country</TableCell>
                 <TableCell className={rightCell}>

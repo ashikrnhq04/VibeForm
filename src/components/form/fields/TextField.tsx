@@ -21,6 +21,7 @@ type Props<T extends FieldValues> = {
   required?: boolean;
   icon?: ReactNode;
   autoComplete?: string;
+  hasError?: boolean;
 };
 
 /**
@@ -61,6 +62,7 @@ export function TextField<T extends FieldValues>({
   required,
   icon,
   autoComplete,
+  hasError = false,
 }: Props<T>): JSX.Element {
   const control = useFormContext<T>();
 
@@ -83,7 +85,9 @@ export function TextField<T extends FieldValues>({
                   type={type}
                   placeholder={placeholder}
                   {...field}
-                  className={`${icon ? "pr-8" : ""} `}
+                  className={`${icon ? "pr-8" : ""} ${
+                    hasError ? "border-red-500" : ""
+                  }`}
                   autoComplete={autoComplete}
                 />
                 {icon && (
