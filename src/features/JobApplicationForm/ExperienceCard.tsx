@@ -43,12 +43,14 @@ export default function ExperienceCard({
             label='Job Title'
             placeholder='Positon'
             required
+            hasError={!!`experience.${index}.jobTitle`}
           />
           <TextField<formType>
             name={`experience.${index}.company`}
             label='Company Name'
             placeholder='Company Name'
             required
+            hasError={!!`experience.${index}.company`}
           />
         </div>
 

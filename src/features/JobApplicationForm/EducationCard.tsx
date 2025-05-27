@@ -49,6 +49,7 @@ export default function EducationCard({ index, onRemove }: Props): JSX.Element {
               { text: "Post Graduation", value: "post_graduation" },
             ]}
             placeholder='Select Exam'
+            required
           />
           <SelectField<formType>
             name={`education.${index}.group`}
@@ -59,6 +60,7 @@ export default function EducationCard({ index, onRemove }: Props): JSX.Element {
               { text: "Arts", value: "arts" },
             ]}
             placeholder='Select Group'
+            required
           />
         </div>
         <div className='w-full flex gap-4 items-start'>
@@ -67,6 +69,7 @@ export default function EducationCard({ index, onRemove }: Props): JSX.Element {
             label='Passing Year'
             options={arrayYears}
             placeholder='Select Passing Year'
+            required
           />
           <SelectField<formType>
             name={`education.${index}.result`}
@@ -78,6 +81,7 @@ export default function EducationCard({ index, onRemove }: Props): JSX.Element {
               { text: "GPA", value: "gpa" },
             ]}
             placeholder='Select Result'
+            required
           />
         </div>
         <div className='w-full flex gap-4 items-start'>
@@ -90,6 +94,7 @@ export default function EducationCard({ index, onRemove }: Props): JSX.Element {
                 { text: "Out of 5", value: "5" },
               ]}
               placeholder='Select GPA Scale'
+              required
             />
           )}
           {result == "gpa" && (
@@ -97,6 +102,8 @@ export default function EducationCard({ index, onRemove }: Props): JSX.Element {
               name={`education.${index}.gpa_point`}
               label='GPA'
               placeholder='Specify GPA'
+              required
+              hasError={!!`education.${index}.gpa_point`}
             />
           )}
         </div>

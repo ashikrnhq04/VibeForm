@@ -53,7 +53,7 @@ export default function JobApplicationForm() {
         alert(JSON.stringify(values));
         setTimeout(() => window.location.reload(), 1000);
       }}
-      mode='onBlur'
+      mode='onChange'
     >
       <StepArea submitBtnRef={submitBtnRef}>
         <Step validate={() => validateStep(firstStepFields)}>
