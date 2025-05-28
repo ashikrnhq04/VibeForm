@@ -1,4 +1,4 @@
-import { experienceSchema, ExperienceType } from "./schema";
+import { ExperienceType } from "./schema";
 import { TextField } from "@/components/form/fields/TextField";
 import { useFormContext } from "react-hook-form";
 import { JSX } from "react";
@@ -7,7 +7,7 @@ import { Trash2 } from "lucide-react";
 import { DateField } from "@/components/form/fields/DateField";
 import TextAreaField from "@/components/form/fields/TextAreaField";
 import CheckboxField from "@/components/form/fields/CheckboxField";
-import { Schema } from "zod";
+import { wordCount } from "@/lib/utils";
 
 type Props = {
   index: number;
@@ -23,6 +23,10 @@ export default function ExperienceCard({
   const { watch } = useFormContext<formType>();
 
   const currentlyWork = watch(`experience.${index}.currentlyWorking`);
+  const jobDescription = watch(`experience.${index}.jobDescription`);
+
+  const limit = 500;
+  const writtenWords = wordCount(jobDescription);
 
   return (
     <>
@@ -82,13 +86,16 @@ export default function ExperienceCard({
             />
           </div>
         </div>
-        <div className='w-full flex gap-4 items-start'>
+        <div className='w-full flex gap-1 items-start flex-col '>
           <TextAreaField<formType>
             className='h-32'
             name={`experience.${index}.jobDescription`}
             label='Job Description'
             placeholder='Write Responsibilities'
           />
+          <p className='text-right self-end text-slate-400'>
+            {writtenWords} / {limit}
+          </p>
         </div>
       </div>
     </>

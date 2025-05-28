@@ -204,7 +204,12 @@ export const experienceSchema = z
           .string()
           .refine(
             (value) => {
-              if (value.trim().split(" ").length > 300) {
+              if (
+                value
+                  .trim()
+                  .split(" ")
+                  .filter((word) => word.trim()).length > 500
+              ) {
                 return false;
               }
               return true;

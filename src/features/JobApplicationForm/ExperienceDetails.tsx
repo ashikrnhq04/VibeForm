@@ -11,7 +11,6 @@ export default function ExperienceDetails(): JSX.Element {
     formState: { errors },
   } = useFormContext();
 
-  console.log(errors);
   return (
     <Card>
       <CardHeader>

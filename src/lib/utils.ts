@@ -27,3 +27,8 @@ export function calculateAge(dob: Date) {
 
   return { years, months, days };
 }
+
+// word count
+export function wordCount(field: string | undefined) {
+  return field?.split(" ").filter((item: string) => item.trim()).length;
+}

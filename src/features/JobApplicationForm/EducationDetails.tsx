@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import EducationCard from "./EducationCard";
-import { JSX } from "react";
+import { JSX, useEffect } from "react";
 import FieldsArray from "@/components/form/FieldsArray";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,6 @@ export default function EducationDetails(): JSX.Element {
     formState: { errors },
   } = useFormContext();
 
-  console.log(errors.education);
   return (
     <Card>
       <CardHeader>
