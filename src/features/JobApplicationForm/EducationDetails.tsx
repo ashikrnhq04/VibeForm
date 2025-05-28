@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import EducationCard from "./EducationCard";
-import { JSX, useEffect } from "react";
+import { JSX } from "react";
 import FieldsArray from "@/components/form/FieldsArray";
 import { useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
