@@ -198,7 +198,10 @@ export const experienceSchema = z
             message: "Job title can't be empty",
           }),
         startingDate: z.date({ required_error: "Starting date is required" }),
-        endDate: z.date({ required_error: "End date is required" }).optional(),
+        endDate: z
+          .date({ required_error: "End date is required" })
+          .optional()
+          .nullable(),
         currentlyWorking: z.boolean().optional(),
         jobDescription: z
           .string()

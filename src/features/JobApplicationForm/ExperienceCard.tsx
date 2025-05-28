@@ -1,13 +1,14 @@
 import { ExperienceType } from "./schema";
 import { TextField } from "@/components/form/fields/TextField";
 import { useFormContext } from "react-hook-form";
-import { JSX } from "react";
+import { JSX, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { DateField } from "@/components/form/fields/DateField";
 import TextAreaField from "@/components/form/fields/TextAreaField";
 import CheckboxField from "@/components/form/fields/CheckboxField";
 import { wordCount } from "@/lib/utils";
+import { SelectValue } from "@radix-ui/react-select";
 
 type Props = {
   index: number;
@@ -20,13 +21,21 @@ export default function ExperienceCard({
 }: Props): JSX.Element {
   type formType = { experience: ExperienceType };
 
-  const { watch } = useFormContext<formType>();
+  const { watch, setValue } = useFormContext<formType>();
 
   const currentlyWork = watch(`experience.${index}.currentlyWorking`);
   const jobDescription = watch(`experience.${index}.jobDescription`);
 
   const limit = 500;
   const writtenWords = wordCount(jobDescription);
+
+  useEffect(() => {
+    console.log(currentlyWork);
+    if (currentlyWork) {
+      console.log("working");
+      setValue(`experience.${index}.endDate`, null);
+    }
+  }, [currentlyWork, index, setValue]);
 
   return (
     <>

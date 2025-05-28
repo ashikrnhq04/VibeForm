@@ -123,9 +123,12 @@ export function DateField<T extends FieldValues>(props: Props<T>): JSX.Element {
     selectedDate: Date | undefined,
     onChange: (date: Date | undefined) => void
   ) {
-    if (selectedDate) {
+    if (selectedDate && !disabled) {
       onChange(selectedDate);
       setDate(selectedDate);
+    } else {
+      onChange(new Date());
+      setDate(new Date());
     }
     setOpen(false);
   }
