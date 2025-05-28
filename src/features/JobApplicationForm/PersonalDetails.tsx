@@ -58,13 +58,6 @@ export default function PersonalDetails() {
     getCountries(setCountries);
   }, []);
 
-  console.log(
-    "Present length",
-    permanentCities.length,
-    "Permanent length",
-    permanentCities.length
-  );
-
   return (
     <Card>
       <CardHeader>

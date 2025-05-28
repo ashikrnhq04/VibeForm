@@ -1,4 +1,4 @@
-import { ExperienceType } from "./schema";
+import { experienceSchema, ExperienceType } from "./schema";
 import { TextField } from "@/components/form/fields/TextField";
 import { useFormContext } from "react-hook-form";
 import { JSX } from "react";
@@ -7,6 +7,7 @@ import { Trash2 } from "lucide-react";
 import { DateField } from "@/components/form/fields/DateField";
 import TextAreaField from "@/components/form/fields/TextAreaField";
 import CheckboxField from "@/components/form/fields/CheckboxField";
+import { Schema } from "zod";
 
 type Props = {
   index: number;
