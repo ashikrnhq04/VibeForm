@@ -8,7 +8,6 @@ import { DateField } from "@/components/form/fields/DateField";
 import TextAreaField from "@/components/form/fields/TextAreaField";
 import CheckboxField from "@/components/form/fields/CheckboxField";
 import { wordCount } from "@/lib/utils";
-import { SelectValue } from "@radix-ui/react-select";
 
 type Props = {
   index: number;

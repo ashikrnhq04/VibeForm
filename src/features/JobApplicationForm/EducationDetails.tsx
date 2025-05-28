@@ -51,7 +51,7 @@ export default function EducationDetails(): JSX.Element {
                     />
                   ))}
                   <Button
-                    className='text-black bg-gray-100 hover:bg-gray-100 rounded-lg cursor-pointer'
+                    className='text-black bg-gray-100 hover:bg-gray-100 mt-1 rounded-lg cursor-pointer'
                     type='button'
                     disabled={isLimitReached}
                     onClick={() => {
