@@ -29,9 +29,7 @@ export default function ExperienceCard({
   const writtenWords = wordCount(jobDescription);
 
   useEffect(() => {
-    console.log(currentlyWork);
     if (currentlyWork) {
-      console.log("working");
       setValue(`experience.${index}.endDate`, null);
     }
   }, [currentlyWork, index, setValue]);
@@ -102,7 +100,7 @@ export default function ExperienceCard({
             placeholder='Write Responsibilities'
           />
           <p className='text-right self-end text-slate-400'>
-            {writtenWords} / {limit}
+            {writtenWords ?? 0} / {limit}
           </p>
         </div>
       </div>
