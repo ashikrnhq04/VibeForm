@@ -38,9 +38,6 @@ export default function ExperienceCard({
     }
   }, [currentlyWork, index, setValue]);
 
-  console.log(errors);
-  console.log(errors.experience?.[index]?.jobTitle);
-
   return (
     <>
       <div className='flex justify-between w-full items-center py-2 mb-4 border-b-black border-b-2'>
