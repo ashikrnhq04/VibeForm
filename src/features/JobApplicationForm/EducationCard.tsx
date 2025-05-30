@@ -20,7 +20,10 @@ type Props = {
 export default function EducationCard({ index, onRemove }: Props): JSX.Element {
   type formType = { education: EducationType };
 
-  const { watch } = useFormContext<formType>();
+  const {
+    watch,
+    formState: { errors },
+  } = useFormContext<formType>();
 
   const result = watch(`education.${index}.result`);
 
@@ -103,7 +106,7 @@ export default function EducationCard({ index, onRemove }: Props): JSX.Element {
               label='GPA'
               placeholder='Specify GPA'
               required
-              hasError={!!`education.${index}.gpa_point`}
+              hasError={!!errors.education?.[index]?.gpa_point}
             />
           )}
         </div>

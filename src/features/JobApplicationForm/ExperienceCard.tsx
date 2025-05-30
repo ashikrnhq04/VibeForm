@@ -20,7 +20,11 @@ export default function ExperienceCard({
 }: Props): JSX.Element {
   type formType = { experience: ExperienceType };
 
-  const { watch, setValue } = useFormContext<formType>();
+  const {
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext<formType>();
 
   const currentlyWork = watch(`experience.${index}.currentlyWorking`);
   const jobDescription = watch(`experience.${index}.jobDescription`);
@@ -33,6 +37,9 @@ export default function ExperienceCard({
       setValue(`experience.${index}.endDate`, null);
     }
   }, [currentlyWork, index, setValue]);
+
+  console.log(errors);
+  console.log(errors.experience?.[index]?.jobTitle);
 
   return (
     <>
@@ -54,14 +61,14 @@ export default function ExperienceCard({
             label='Job Title'
             placeholder='Positon'
             required
-            hasError={!!`experience.${index}.jobTitle`}
+            hasError={!!errors.experience?.[index]?.jobTitle}
           />
           <TextField<formType>
             name={`experience.${index}.company`}
             label='Company Name'
             placeholder='Company Name'
             required
-            hasError={!!`experience.${index}.company`}
+            hasError={!!errors.experience?.[index]?.company}
           />
         </div>
 
